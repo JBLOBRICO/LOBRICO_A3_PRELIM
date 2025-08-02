@@ -1,0 +1,111 @@
+﻿@model List<LOBRICO_A3_PRELIM.Models.ViewModels.BorrowerViewModel>
+
+@{
+    ViewData["Title"] = "📋 Borrowers and Their Borrowed Books";
+}
+
+<style>
+    .borrower-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        background-color: #fff;
+    }
+
+    .borrower-header {
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        color: white;
+        padding: 15px 20px;
+    }
+
+        .borrower-header h5 {
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+
+        .borrower-header small {
+            opacity: 0.9;
+        }
+
+    .borrowed-table thead {
+        background-color: #f8f9fc;
+        color: #343a40;
+        font-weight: 600;
+    }
+
+    .borrowed-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .badge-returned {
+        background-color: #d4edda;
+        color: #155724;
+        font-weight: 500;
+    }
+
+    .badge-borrowed {
+        background-color: #fff3cd;
+        color: #856404;
+        font-weight: 500;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-5" style="color: #2c3e50;">@ViewData["Title"]</h2>
+
+    @foreach (var user in Model)
+    {
+        <div class="borrower-card mb-4">
+            <div class="borrower-header">
+                <h5>👤 @user.Username</h5>
+                <small>@user.Email</small>
+            </div>
+
+            <div class="p-4">
+                @if (user.BorrowedBooks != null && user.BorrowedBooks.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered borrowed-table align-middle text-center">
+                            <thead>
+                                <tr>
+                                    <th>📚 Title</th>
+                                    <th>✍️ Author</th>
+                                    <th>📅 Borrowed Date</th>
+                                    <th>📆 Return Date</th>
+                                    <th>📌 Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var book in user.BorrowedBooks)
+                                {
+                                    <tr>
+                                        <td class="text-start">@book.Title</td>
+                                        <td>@book.AuthorName</td>
+                                        <td>@(book.BorrowedDate?.ToString("MMM dd, yyyy") ?? "-")</td>
+                                        <td>@(book.ReturnDate?.ToString("MMM dd, yyyy") ?? "-")</td>
+                                        <td>
+                                            @if (book.Status == "Borrowed")
+                                            {
+                                                <span class="badge badge-borrowed">Borrowed</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-returned">Returned</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-secondary mt-3">
+                        <em>This user hasn't borrowed any books yet.</em>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

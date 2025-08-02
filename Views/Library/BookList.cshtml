@@ -1,0 +1,101 @@
+﻿@model List<LOBRICO_A3_PRELIM.Models.ViewModels.BookViewModel>
+
+@{
+    ViewData["Title"] = "📚 Library Catalog";
+}
+
+<style>
+    .elegant-table {
+        border-radius: 12px;
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+        .elegant-table thead {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        .elegant-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .elegant-title {
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 28px;
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+    }
+
+    .badge-soft-success {
+        background-color: #d4edda;
+        color: #155724;
+        font-weight: 500;
+    }
+
+    .badge-soft-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        font-weight: 500;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center elegant-title">@ViewData["Title"]</h2>
+
+    <div class="table-responsive elegant-table">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                    <th>Book ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>ISBN</th>
+                    <th>Availability</th>
+                    <th>Borrower</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr class="text-center">
+                        <td>@book.BookId</td>
+                        <td class="text-start">@book.Title</td>
+                        <td>@book.AuthorName</td>
+                        <td>@book.Genre</td>
+                        <td>@book.ISBN</td>
+                        <td>
+                            @if (book.Availability == "Available")
+                            {
+                                <span class="badge badge-soft-success">Available</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-soft-danger">Borrowed</span>
+                            }
+                        </td>
+                        <td>
+                            @if (book.BorrowerName != "None")
+                            {
+                                <span>@book.BorrowerName</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
