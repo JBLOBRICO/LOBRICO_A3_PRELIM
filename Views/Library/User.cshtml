@@ -5,53 +5,73 @@
 }
 
 <style>
-    .borrower-card {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        background-color: #fff;
+    body {
+        background-color: #f5f7fa;
     }
 
+    .borrower-card {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition: 0.3s ease;
+    }
+
+        .borrower-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
     .borrower-header {
-        background: linear-gradient(135deg, #4e73df, #1cc88a);
-        color: white;
-        padding: 15px 20px;
+        background-color: #eef3f8;
+        color: #2d3e50;
+        padding: 15px 25px;
+        border-bottom: 1px solid #dee2e6;
+        border-radius: 12px 12px 0 0;
     }
 
         .borrower-header h5 {
-            margin-bottom: 0;
+            margin: 0;
             font-weight: 600;
         }
 
         .borrower-header small {
-            opacity: 0.9;
+            color: #6c757d;
         }
 
-    .borrowed-table thead {
-        background-color: #f8f9fc;
-        color: #343a40;
-        font-weight: 600;
+    .table thead {
+        background-color: #f1f3f5;
+        color: #495057;
     }
 
-    .borrowed-table tbody tr:hover {
-        background-color: #f1f1f1;
+    .table-hover tbody tr:hover {
+        background-color: #f9f9fc;
     }
 
-    .badge-returned {
-        background-color: #d4edda;
-        color: #155724;
-        font-weight: 500;
-    }
-
-    .badge-borrowed {
+    .badge-soft-borrowed {
         background-color: #fff3cd;
         color: #856404;
         font-weight: 500;
+        border-radius: 6px;
+        padding: 4px 10px;
+    }
+
+    .badge-soft-returned {
+        background-color: #d4edda;
+        color: #155724;
+        font-weight: 500;
+        border-radius: 6px;
+        padding: 4px 10px;
+    }
+
+    h2.title {
+        font-weight: 600;
+        color: #34495e;
+        margin-bottom: 30px;
     }
 </style>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-5" style="color: #2c3e50;">@ViewData["Title"]</h2>
+    <h2 class="text-center title">@ViewData["Title"]</h2>
 
     @foreach (var user in Model)
     {
@@ -65,7 +85,7 @@
                 @if (user.BorrowedBooks != null && user.BorrowedBooks.Any())
                 {
                     <div class="table-responsive">
-                        <table class="table table-bordered borrowed-table align-middle text-center">
+                        <table class="table table-bordered table-hover text-center align-middle">
                             <thead>
                                 <tr>
                                     <th>📚 Title</th>
@@ -86,11 +106,11 @@
                                         <td>
                                             @if (book.Status == "Borrowed")
                                             {
-                                                <span class="badge badge-borrowed">Borrowed</span>
+                                                <span class="badge-soft-borrowed">Borrowed</span>
                                             }
                                             else
                                             {
-                                                <span class="badge badge-returned">Returned</span>
+                                                <span class="badge-soft-returned">Returned</span>
                                             }
                                         </td>
                                     </tr>
@@ -101,7 +121,7 @@
                 }
                 else
                 {
-                    <div class="alert alert-secondary mt-3">
+                    <div class="alert alert-secondary mt-3 mb-0">
                         <em>This user hasn't borrowed any books yet.</em>
                     </div>
                 }
